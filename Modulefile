@@ -1,11 +1,8 @@
-name    'puppet-rhnsatellite-gen'
-version '0.0.1'
-source 'UNKNOWN'
-author 'puppet'
+name    'puppet-rhnsatellite'
+version '1.0.0'
+source ''
+author 'andy@tinycat.co.uk'
 license 'Apache License, Version 2.0'
-summary 'UNKNOWN'
-description 'UNKNOWN'
-project_page 'UNKNOWN'
-
-## Add dependencies, if any:
-# dependency 'username/name', '>= 1.2.0'
+summary 'Type and provider to manage RHN Satellite channel configuration.'
+description 'Type and provider to manage RHN Satellite channel configuration.'
+project_page 'https://github.com/andytinycat/puppet-rhnsatellite'

@@ -1,41 +1,51 @@
-# == Class: rhnsatellite-gen
+# == Class: puppet-rhnsatellite
 #
-# Full description of class rhnsatellite-gen here.
+# This module contains a provider and type to manage RHN Satellite channels.
 #
 # === Parameters
 #
-# Document parameters here.
+# [*server_url*]
+#   URL to the XMLRPC endpoint of the Satellite server. Normally:
+#   https://rhn.your.org/XMLRPC
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
+# [*username*]
+#   Username of a RHN Satellite administrator; required so the module can
+#   change a client machine's subscriptions.
 #
-# === Variables
+# [*password*]
+#   Password for the above user.
 #
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if it
-#   has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should not be used in preference to class parameters  as of
-#   Puppet 2.6.)
+# [*ssl_cert*]
+#   Name of the SSL certificate your RHN Satellite server will present. Place
+#   this file in the 'files' directory of this module with the .pem extension.
 #
 # === Examples
 #
-#  class { rhnsatellite-gen:
+#  class { 'puppet-rhnsatellite':
 #    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ]
 #  }
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Andy Sykes <andy@tinycat.co.uk>
 #
 # === Copyright
 #
-# Copyright 2011 Your name here, unless otherwise noted.
+# Copyright 2012 Andy Sykes, unless otherwise noted.
 #
-class rhnsatellite-gen {
+class puppet-rhnsatellite(
+  $server_url  = "http://rhn.redhat.com/XMLRPC",
+  $username = "orgadmin",
+  $password = "password"
+) {
 
+  # Read by the provider on the machine, to log into RHN and
+  # change subscriptions.
+  file {'/etc/puppet/rhn.conf':
+    owner   => root,
+    group   => root,
+    mode    => 0600,
+    content => template('puppet-rhnsatellite/rhn.conf.erb')
+  }
 
 }

@@ -97,8 +97,6 @@ Puppet::Type.type(:satelliterepo).provide :satellite, :parent => Puppet::Provide
     server = ""
     username = ""
     password = ""
-    organisation = ""
-    system_type = ""
 
     # Read server URL, username, password from a file
     begin
@@ -106,7 +104,7 @@ Puppet::Type.type(:satelliterepo).provide :satellite, :parent => Puppet::Provide
       while (line = rhn_conf.gets)
         line.gsub!(/[ \t]+/, " "); # blow away extra spaces/tabs
         next if line =~ /^#/;
-        if line =~ /server = (\S+)/
+        if line =~ /server_url = (\S+)/
           server = $1
         end
         if line =~ /username = (\S+)/
@@ -115,16 +113,10 @@ Puppet::Type.type(:satelliterepo).provide :satellite, :parent => Puppet::Provide
         if line =~ /password = (\S+)/
           password = $1
         end
-        if line =~ /organisation = (\S+)/
-          organisation = $1
-        end
-        if line =~ /system_type = (\S+)/
-          system_type = $1
-        end
       end
 
       # Return the details to the caller
-      {:server => server, :username => username, :password => password, :organisation => organisation, :system_type => system_type}
+      {:server => server, :username => username, :password => password}
 
     rescue Exception => e
       raise IOError, "Couldn't access /etc/puppet/rhn.conf: #{e.message}"
