@@ -34,7 +34,7 @@
 # Copyright 2012 Andy Sykes, unless otherwise noted.
 #
 class puppet-rhnsatellite(
-  $server_url  = "http://rhn.redhat.com/XMLRPC",
+  $server_url  = "https://rhn.redhat.com/XMLRPC",
   $username = "orgadmin",
   $password = "password"
 ) {
